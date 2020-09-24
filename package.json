@@ -1,0 +1,26 @@
+{
+  "name": "rest-mongoose",
+  "version": "1.0.0",
+  "description": "Rest controllers and routes for mongodb over mongoose and express",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/The-Gray-Hole/rest-mongoose.git"
+  },
+  "keywords": [
+    "rest",
+    "api",
+    "mongoose",
+    "mongodb",
+    "express"
+  ],
+  "author": "Alejandro Alfonso",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/The-Gray-Hole/rest-mongoose/issues"
+  },
+  "homepage": "https://github.com/The-Gray-Hole/rest-mongoose#readme"
+}
