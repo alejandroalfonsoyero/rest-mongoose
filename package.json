@@ -1,8 +1,8 @@
 {
   "name": "rest-mongoose",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Rest controllers and routes for mongodb over mongoose and express",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
