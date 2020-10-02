@@ -10,23 +10,11 @@ const valid_actions = [
 ];
 exports.valid_actions = valid_actions;
 class MongoController {
-    constructor(Model, actions) {
-        this.Model = Model;
+    constructor(model, actions) {
+        this._mongo_model = model;
         if (!MongoController.validate_actions(actions))
             throw Error(`Invalid set of actions ${actions}`);
-        this.actions = actions;
-    }
-    doit(excecutor, action, request, response) {
-        if (!this.actions.includes(action)) {
-            throw Error(`Cannot ${action} items in this model. Err: Action not allowed`);
-        }
-        else {
-            switch (action) {
-                case "CREATE":
-                    excecutor.create(request, response);
-                    break;
-            }
-        }
+        this._actions = actions;
     }
     static validate_actions(actions) {
         if (actions.length == 0)
@@ -36,6 +24,12 @@ class MongoController {
                 return false;
         }
         return true;
+    }
+    mongo_model() {
+        return this._mongo_model;
+    }
+    actions() {
+        return this._actions;
     }
 }
 exports.MongoController = MongoController;

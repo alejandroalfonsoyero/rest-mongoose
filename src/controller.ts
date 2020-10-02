@@ -1,6 +1,6 @@
 import { MongoModel } from './model';
 
-const valid_actions= [
+const valid_actions: Array<string>= [
     "CREATE",
     "FINDALL",
     "FINDONE",
@@ -11,25 +11,13 @@ const valid_actions= [
 export { valid_actions };
 
 export class MongoController {
-    public Model: MongoModel;
-    public actions;
+    private _mongo_model: MongoModel;
+    private _actions: Array<string>;
 
-    constructor(Model: MongoModel, actions: Array<string>) {
-        this.Model = Model;
+    constructor(model: MongoModel, actions: Array<string>) {
+        this._mongo_model = model;
         if (!MongoController.validate_actions(actions)) throw Error(`Invalid set of actions ${actions}`);
-        this.actions = actions;
-    }
-
-    public doit(excecutor, action: string, request, response) {
-        if (!this.actions.includes(action)) {
-            throw Error(`Cannot ${action} items in this model. Err: Action not allowed`);
-        } else {
-            switch (action) {
-                case "CREATE":
-                    excecutor.create(request, response);
-                    break;
-            }
-        }
+        this._actions = actions;
     }
 
     public static validate_actions(actions: Array<string>): boolean {
@@ -39,4 +27,13 @@ export class MongoController {
         }
         return true;
     }
+
+    public mongo_model(): MongoModel {
+        return this._mongo_model;
+    }
+
+    public actions(): Array<string> {
+        return this._actions;
+    }
+
 }
