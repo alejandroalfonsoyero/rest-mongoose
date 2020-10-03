@@ -1,6 +1,6 @@
 {
   "name": "rest-mongoose",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Rest controllers and routes for mongodb over mongoose and express",
   "main": "build/index.js",
   "scripts": {
