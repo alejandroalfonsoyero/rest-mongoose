@@ -8,7 +8,6 @@
   },
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "npm run build",
     "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "repository": {

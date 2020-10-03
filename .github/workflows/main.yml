@@ -9,7 +9,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  test:
+  test-build-deploy:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -19,17 +19,9 @@ jobs:
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
-      - name: npm install and test
-        run: |
-          npm install
-          npm run test
-  publish:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: npm install and test
-        run: |
-          npm install
-          npm login --registry=https://npm.pkg.github.com/
-          npm publish
+      - name: Dependencies
+        run: npm install
+      - name: Test
+        run: npm run test
+      - name: Build
+        run: npm run build
