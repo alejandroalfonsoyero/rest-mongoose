@@ -1,10 +1,11 @@
 {
   "name": "rest-mongoose",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Rest controllers and routes for mongodb over mongoose and express",
   "main": "build/index.js",
   "scripts": {
     "build": "tsc",
+    "prepublishOnly": "npm run build",
     "test": "mocha -r ts-node/register tests/**/*.test.ts"
   },
   "repository": {
