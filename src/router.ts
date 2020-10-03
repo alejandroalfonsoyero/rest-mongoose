@@ -3,7 +3,8 @@ import { MongoModel } from './model';
 import { model } from 'mongoose';
 
 interface App {
-    post: Function
+    post: Function,
+    get: Function
 }
 
 export class MongoRouter {
@@ -36,6 +37,30 @@ export class MongoRouter {
                         instance.save()
                         .then( data => {
                             response.status(201).send(data);
+                        }).catch( err => {
+                            response.status(500).send({
+                                message: err.message
+                            });
+                        });
+                    });
+                    break;
+                case "FINDALL":
+                    this.app.get(`/${model_name}s`, (request, response) => {
+                        _model.find()
+                        .then( instances => {
+                            response.status(200).send(instances);
+                        }).catch( err => {
+                            response.status(500).send({
+                                message: err.message
+                            });
+                        });
+                    });
+                    break;
+                case "FINDONE":
+                    this.app.get(`/${model_name}s/:${model_name}id`, (request, response) => {
+                        _model.findById(request.params[`${model_name}id`])
+                        .then( instance => {
+                            response.status(200).send(instance);
                         }).catch( err => {
                             response.status(500).send({
                                 message: err.message

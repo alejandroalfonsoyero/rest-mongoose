@@ -32,6 +32,30 @@ class MongoRouter {
                         });
                     });
                     break;
+                case "FINDALL":
+                    this.app.get(`/${model_name}s`, (request, response) => {
+                        _model.find()
+                            .then(instances => {
+                            response.status(200).send(instances);
+                        }).catch(err => {
+                            response.status(500).send({
+                                message: err.message
+                            });
+                        });
+                    });
+                    break;
+                case "FINDONE":
+                    this.app.get(`/${model_name}s/:${model_name}id`, (request, response) => {
+                        _model.findById(request.params[`${model_name}id`])
+                            .then(instance => {
+                            response.status(200).send(instance);
+                        }).catch(err => {
+                            response.status(500).send({
+                                message: err.message
+                            });
+                        });
+                    });
+                    break;
             }
         }
     }
