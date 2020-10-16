@@ -1,6 +1,6 @@
 import { MongoController } from './controller';
 import { MongoModel } from './model';
-import { model } from 'mongoose';
+import { Model } from 'mongoose';
 
 interface App {
     post: Function,
@@ -23,7 +23,7 @@ export class MongoRouter {
         var mongo_model: MongoModel = this._controller.mongo_model();
         var actions: Array<string> = this._controller.actions();
         var model_fields: object = mongo_model.fields();
-        var _model: model = mongo_model.model();
+        var _model: Model<any> = mongo_model.model();
         var model_name = mongo_model.name();
         for(let i = 0; i < actions.length; i++) {
             switch (actions[i]) {
