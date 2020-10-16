@@ -1,12 +1,15 @@
 import { Schema } from 'mongoose';
 import { SchemaDefinition } from 'mongoose';
 import { model } from 'mongoose';
+import { Model } from 'mongoose';
+
+import sanitizer = require('mongoose-sanitize');
 
 export class MongoModel {
     private _name: string;
     private _fields: object;
     private _shema: Schema;
-    private _model: model;
+    private _model: Model<any>;
 
     constructor(name: string, fields: SchemaDefinition, time_stamps: boolean) {
         this._name = name;
@@ -17,6 +20,7 @@ export class MongoModel {
                 timestamps: time_stamps
             }
         );
+        this._shema.plugin(sanitizer, {});
         this._model = model(name, this._shema)
     }
 
@@ -28,7 +32,7 @@ export class MongoModel {
         return this._fields;
     }
 
-    public model(): model {
+    public model(): Model<any> {
         return this._model;
     }
 
