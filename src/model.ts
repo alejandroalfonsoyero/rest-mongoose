@@ -3,7 +3,7 @@ import { SchemaDefinition } from 'mongoose';
 import { model } from 'mongoose';
 import { Model } from 'mongoose';
 
-import sanitizer = require('mongoose-sanitize');
+const sanitizer = require('mongoose-sanitize');
 
 export class MongoModel {
     private _name: string;

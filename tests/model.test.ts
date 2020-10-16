@@ -4,8 +4,8 @@ import { model } from 'mongoose';
 
 const timestamp = Math.floor(Date.now() / 1000).toString();
 
-describe('MongoModel', () => {
-    it('Sould create a MongoModel instance with constructor', () => {
+describe('MongoModel', function() {
+    it('Sould create a MongoModel instance with constructor', function() {
         var mock_model = new MongoModel("mock_name", {
             mock_field: {
                 type: String,
@@ -17,7 +17,7 @@ describe('MongoModel', () => {
         expect(mock_model).instanceof(MongoModel);
     });
 
-    it('Sould get name property', () => {
+    it('Sould get name property', function() {
         var mock_model = new MongoModel(`mock_name1_${timestamp}`, {
             mock_field: {
                 type: String,
@@ -30,7 +30,7 @@ describe('MongoModel', () => {
         expect(name).to.be.equal(`mock_name1_${timestamp}`);
     });
 
-    it('Sould get fields property', () => {
+    it('Sould get fields property', function() {
         const __field = {
             type: String,
             required: true,
@@ -40,11 +40,11 @@ describe('MongoModel', () => {
             mock_field: __field
         }, true);
 
-        var fields = mock_model.fields();
+        var fields: any = mock_model.fields();
         expect(fields["mock_field"]).to.be.eql(__field);
     });
 
-    it('Sould get model property', () => {
+    it('Sould get model property', function() {
         var mock_model = new MongoModel("mock_name3", {
             mock_field: {
                 type: String,

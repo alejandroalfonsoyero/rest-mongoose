@@ -28,17 +28,17 @@ export class MongoRouter {
         for(let i = 0; i < actions.length; i++) {
             switch (actions[i]) {
                 case "CREATE":
-                    this._app.post(`/${model_name}s`, (request, response) => {
-                        var body: object = {};
+                    this._app.post(`/${model_name}s`, function(request: any, response: any) {
+                        var body: any = {};
                         var fields: Array<string> = Object.keys(model_fields);
                         for(let i = 0; i < fields.length; i++) {
                             body[fields[i]] = request.body[fields[i]];
                         }
                         const instance = new _model(body);
                         instance.save()
-                        .then( data => {
+                        .then( function(data: any) {
                             response.status(201).send(data);
-                        }).catch( err => {
+                        }).catch( function(err: any) {
                             response.status(500).send({
                                 message: err.message
                             });
@@ -46,11 +46,11 @@ export class MongoRouter {
                     });
                     break;
                 case "FINDALL":
-                    this._app.get(`/${model_name}s`, (request, response) => {
+                    this._app.get(`/${model_name}s`, function(request: any, response: any) {
                         _model.find()
-                        .then( instances => {
+                        .then( function(instances) {
                             response.status(200).send(instances);
-                        }).catch( err => {
+                        }).catch( function(err) {
                             response.status(500).send({
                                 message: err.message
                             });
@@ -58,11 +58,11 @@ export class MongoRouter {
                     });
                     break;
                 case "FINDONE":
-                    this._app.get(`/${model_name}s/:${model_name}id`, (request, response) => {
+                    this._app.get(`/${model_name}s/:${model_name}id`, function(request: any, response: any) {
                         _model.findById(request.params[`${model_name}id`])
-                        .then( instance => {
+                        .then( function(instance) {
                             response.status(200).send(instance);
-                        }).catch( err => {
+                        }).catch( function(err) {
                             response.status(500).send({
                                 message: err.message
                             });
@@ -70,14 +70,14 @@ export class MongoRouter {
                     });
                     break;
                 case "UPDATE":
-                    this._app.put(`/${model_name}s/:${model_name}id`, (request, response) => {
-                        var body: object = {};
+                    this._app.put(`/${model_name}s/:${model_name}id`, function(request: any, response: any) {
+                        var body: any = {};
                         var fields: Array<string> = Object.keys(model_fields);
                         for(let i = 0; i < fields.length; i++) {
                             body[fields[i]] = request.body[fields[i]];
                         }
                         _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true})
-                        .then( instance => {
+                        .then( function(instance) {
                             if(!instance) {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
@@ -85,7 +85,7 @@ export class MongoRouter {
                             } else {
                                 response.status(200).send(instance);
                             }
-                        }).catch( err => {
+                        }).catch( function(err) {
                             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                                 return response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
@@ -99,9 +99,9 @@ export class MongoRouter {
                     });
                     break;
                 case "DELETE":
-                    this._app.delete(`/${model_name}s/:${model_name}id`, (request, response) => {
+                    this._app.delete(`/${model_name}s/:${model_name}id`, function(request: any, response: any) {
                         _model.findByIdAndRemove(request.params[`${model_name}id`])
-                        .then( instance => {
+                        .then( function(instance) {
                             if (!instance) {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
@@ -111,7 +111,7 @@ export class MongoRouter {
                                     message: `${model_name} deleted successfully`
                                 });
                             }
-                        }).catch( err => {
+                        }).catch( function(err) {
                             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
