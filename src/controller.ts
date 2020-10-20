@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { MongoModel } from './model';
 
 const valid_actions: Array<string>= [
@@ -28,11 +29,11 @@ export class MongoController {
         return true;
     }
 
-    public mongo_model(): MongoModel {
+    public get mongo_model(): MongoModel {
         return this._mongo_model;
     }
 
-    public actions(): Array<string> {
+    public get actions(): Array<string> {
         return this._actions;
     }
 

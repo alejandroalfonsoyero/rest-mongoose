@@ -44,7 +44,8 @@ var model_1 = new rest_mongoose.MongoModel("name_1", {
     }
 }, true);
 var controller_1 = new rest_mongoose.MongoController(model_1, rest_mongoose.valid_actions);
-var router_1 = new rest_mongoose.MongoRouter(app, controller_1);
+var auth_1 = new rest_mongoose.Auth(function(token, action){return true}, []);
+var router_1 = new rest_mongoose.MongoRouter(app, controller_1, auth_1);
 
 // Defining model 2
 var model_2 = new rest_mongoose.MongoModel("name_2", {
@@ -60,7 +61,8 @@ var model_2 = new rest_mongoose.MongoModel("name_2", {
     }
 }, true);
 var controller_2 = new rest_mongoose.MongoController(model_2, ["CREATE", "FINDALL"]);
-var router_2 = new rest_mongoose.MongoRouter(app, controller_2);
+var auth_2 = new rest_mongoose.Auth(function(token, action){return true}, ["FINDALL"]);
+var router_2 = new rest_mongoose.MongoRouter(app, controller_2, auth_2);
 
 // Creating the endpoints
 router_1.route();

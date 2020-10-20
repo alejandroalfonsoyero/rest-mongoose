@@ -10,8 +10,8 @@ describe('MongoController', () => {
         let mock_controller = new MongoController(mock_model, valid_actions);
 
         expect(mock_controller).instanceof(MongoController);
-        expect(mock_controller.mongo_model()).equal(mock_model);
-        expect(mock_controller.actions()).eql(valid_actions);
+        expect(mock_controller.mongo_model).equal(mock_model);
+        expect(mock_controller.actions).eql(valid_actions);
     });
 
     it('Should validate rigth actions', () => {
@@ -40,7 +40,7 @@ describe('MongoController', () => {
         }, true);
         let mock_controller = new MongoController(mock_model, valid_actions);
 
-        let _model = mock_controller.mongo_model();
+        let _model = mock_controller.mongo_model;
         expect(_model).instanceof(MongoModel);
         expect(_model).to.be.equal(mock_model);
     });
@@ -55,7 +55,7 @@ describe('MongoController', () => {
         }, true);
         let mock_controller = new MongoController(mock_model, valid_actions);
 
-        let _actions = mock_controller.actions();
+        let _actions = mock_controller.actions;
         expect(_actions).instanceof(Array);
         expect(_actions).to.be.equal(valid_actions);
     });

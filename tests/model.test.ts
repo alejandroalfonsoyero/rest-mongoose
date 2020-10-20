@@ -26,7 +26,7 @@ describe('MongoModel', function() {
             }
         }, true);
 
-        var name = mock_model.name();
+        var name = mock_model.name;
         expect(name).to.be.equal(`mock_name1_${timestamp}`);
     });
 
@@ -40,7 +40,7 @@ describe('MongoModel', function() {
             mock_field: __field
         }, true);
 
-        var fields: any = mock_model.fields();
+        var fields: any = mock_model.fields;
         expect(fields["mock_field"]).to.be.eql(__field);
     });
 
@@ -53,7 +53,7 @@ describe('MongoModel', function() {
             }
         }, true);
 
-        var __model = mock_model.model();
+        var __model = mock_model.model;
         expect(__model)instanceof(model);
     });
 

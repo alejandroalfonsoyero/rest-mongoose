@@ -1,5 +1,6 @@
 import { MongoController } from './controller';
 import { MongoModel } from './model';
+import { Auth } from './auth';
 import { Model } from 'mongoose';
 
 interface App {
@@ -12,23 +13,25 @@ interface App {
 export class MongoRouter {
     private _controller: MongoController;
     private _app: App;
+    private _auth: Auth;
 
-    constructor(app: App, controller: MongoController) {
+    constructor(app: App, controller: MongoController, auth: Auth) {
         this._controller = controller;
         this._app = app;
+        this._auth = auth;
     }
 
     public route(): void {
 
-        var mongo_model: MongoModel = this._controller.mongo_model();
-        var actions: Array<string> = this._controller.actions();
-        var model_fields: object = mongo_model.fields();
-        var _model: Model<any> = mongo_model.model();
-        var model_name = mongo_model.name();
+        var mongo_model: MongoModel = this._controller.mongo_model;
+        var actions: Array<string> = this._controller.actions;
+        var model_fields: object = mongo_model.fields;
+        var _model: Model<any> = mongo_model.model;
+        var model_name = mongo_model.name;
         for(let i = 0; i < actions.length; i++) {
             switch (actions[i]) {
                 case "CREATE":
-                    this._app.post(`/${model_name}s`, function(request: any, response: any) {
+                    this._app.post(`/${model_name}s`, this._auth.create, function(request: any, response: any) {
                         var body: any = {};
                         var fields: Array<string> = Object.keys(model_fields);
                         for(let i = 0; i < fields.length; i++) {
@@ -46,7 +49,7 @@ export class MongoRouter {
                     });
                     break;
                 case "FINDALL":
-                    this._app.get(`/${model_name}s`, function(request: any, response: any) {
+                    this._app.get(`/${model_name}s`, this._auth.findall, function(request: any, response: any) {
                         _model.find()
                         .then( function(instances) {
                             response.status(200).send(instances);
@@ -58,7 +61,7 @@ export class MongoRouter {
                     });
                     break;
                 case "FINDONE":
-                    this._app.get(`/${model_name}s/:${model_name}id`, function(request: any, response: any) {
+                    this._app.get(`/${model_name}s/:${model_name}id`, this._auth.findone, function(request: any, response: any) {
                         _model.findById(request.params[`${model_name}id`])
                         .then( function(instance) {
                             response.status(200).send(instance);
@@ -70,7 +73,7 @@ export class MongoRouter {
                     });
                     break;
                 case "UPDATE":
-                    this._app.put(`/${model_name}s/:${model_name}id`, function(request: any, response: any) {
+                    this._app.put(`/${model_name}s/:${model_name}id`, this._auth.update, function(request: any, response: any) {
                         var body: any = {};
                         var fields: Array<string> = Object.keys(model_fields);
                         for(let i = 0; i < fields.length; i++) {
@@ -99,7 +102,7 @@ export class MongoRouter {
                     });
                     break;
                 case "DELETE":
-                    this._app.delete(`/${model_name}s/:${model_name}id`, function(request: any, response: any) {
+                    this._app.delete(`/${model_name}s/:${model_name}id`, this._auth.delete, function(request: any, response: any) {
                         _model.findByIdAndRemove(request.params[`${model_name}id`])
                         .then( function(instance) {
                             if (!instance) {
@@ -128,11 +131,11 @@ export class MongoRouter {
         }
     }
 
-    public controller(): MongoController {
+    public get controller(): MongoController {
         return this._controller;
     }
 
-    public app(): App {
+    public get app(): App {
         return this._app;
     }
 }

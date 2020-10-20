@@ -24,15 +24,15 @@ export class MongoModel {
         this._model = model(name, this._shema)
     }
 
-    public name(): string {
+    public get name(): string {
         return this._name;
     }
 
-    public fields(): object {
+    public get fields(): object {
         return this._fields;
     }
 
-    public model(): Model<any> {
+    public get model(): Model<any> {
         return this._model;
     }
 
