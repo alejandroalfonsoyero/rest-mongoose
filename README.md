@@ -80,12 +80,12 @@ You can use all of them or only someones.
 The created endpoints are in based to model name. For this example there will
 be created the next ones:
 
-- method--------------url-------------------------------payload
-- POST----------------/name_1s---------------------{"field_a": string}
-- GET------------------/name_1s
-- GET------------------/names_1s/:name_1id
-- PUT------------------/names_1s/:name_1id------{"field_a": string}
-- DELETE------------/names_1s/:name_1id
-
-- POST----------------/name_2s----------------------{"field_b": string, "field_c": number}
-- GET------------------/name_2s
+| Method        | url                 | payload                                | Headers      |
+| ------------- | :-------------------| :--------------------------------------| :------------|
+| POST          | /name_1s            | {"field_a": string}                    | access-token |
+| GET           | /name_1s            |                                        | access-token |
+| GET           | /names_1s/:name_1id |                                        | access-token |
+| PUT           | /names_1s/:name_1id | {"field_a": string}                    | access-token |
+| DELETE        | /names_1s/:name_1id |                                        | access-token |
+| POST          | /name_2s            | {"field_b": string, "field_c": number} | access-token |
+| GET           | /name_2s            |                                        |              |
