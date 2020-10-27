@@ -2,7 +2,7 @@
 This package aims to be more easy the build of simple rest apis based on the
 combination MongoDB-Nodejs-Express.
 
-# Installation
+## Installation
 ```
 npm install rest-mongoose
 ```
