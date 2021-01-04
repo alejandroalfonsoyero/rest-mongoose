@@ -2,6 +2,7 @@ import { MongoController } from './controller';
 import { MongoModel } from './model';
 import { Auth } from './auth';
 import { Model } from 'mongoose';
+import { hashSync } from 'bcryptjs';
 
 interface App {
     post: Function,
@@ -26,6 +27,7 @@ export class MongoRouter {
         var mongo_model: MongoModel = this._controller.mongo_model;
         var actions: Array<string> = this._controller.actions;
         var model_fields: object = mongo_model.fields;
+        var model_encrypted_fields: Array<string> = mongo_model.encrypted_fields;
         var _model: Model<any> = mongo_model.model;
         var model_name = mongo_model.name;
         for(let i = 0; i < actions.length; i++) {
@@ -35,7 +37,7 @@ export class MongoRouter {
                         var body: any = {};
                         var fields: Array<string> = Object.keys(model_fields);
                         for(let i = 0; i < fields.length; i++) {
-                            body[fields[i]] = request.body[fields[i]];
+                            body[fields[i]] = model_encrypted_fields.includes(fields[i]) ? hashSync(request.body[fields[i]], 10) : request.body[fields[i]];
                         }
                         const instance = new _model(body);
                         instance.save()

@@ -8,12 +8,20 @@ const sanitizer = require('mongoose-sanitize');
 export class MongoModel {
     private _name: string;
     private _fields: object;
+    private _encrypted_fields: Array<string>;
     private _shema: Schema;
     private _model: Model<any>;
 
-    constructor(name: string, fields: SchemaDefinition, time_stamps: boolean) {
+    constructor(name: string, fields: SchemaDefinition, time_stamps: boolean, encrypted_fields?: Array<string>) {
         this._name = name;
         this._fields = fields;
+        this._encrypted_fields = encrypted_fields || [];
+
+        let field_names = Object.keys(fields);
+        if(!this._encrypted_fields.every( field => field_names.includes(field))) {
+            throw Error("Invalid encrypted fields.");
+        }
+
         this._shema = new Schema(
             fields,
             {
@@ -30,6 +38,10 @@ export class MongoModel {
 
     public get fields(): object {
         return this._fields;
+    }
+
+    public get encrypted_fields(): Array<string> {
+        return this._encrypted_fields;
     }
 
     public get model(): Model<any> {
