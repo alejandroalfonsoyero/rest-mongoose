@@ -53,9 +53,9 @@ export class MongoRouter {
                 case "FINDALL":
                     this._app.get(`/${model_name}s`, this._auth.findall, function(request: any, response: any) {
                         _model.find()
-                        .then( function(instances) {
+                        .then( function(instances: any) {
                             response.status(200).send(instances);
-                        }).catch( function(err) {
+                        }).catch( function(err: any) {
                             response.status(500).send({
                                 message: err.message
                             });
@@ -65,9 +65,9 @@ export class MongoRouter {
                 case "FINDONE":
                     this._app.get(`/${model_name}s/:${model_name}id`, this._auth.findone, function(request: any, response: any) {
                         _model.findById(request.params[`${model_name}id`])
-                        .then( function(instance) {
+                        .then( function(instance: any) {
                             response.status(200).send(instance);
-                        }).catch( function(err) {
+                        }).catch( function(err: any) {
                             response.status(500).send({
                                 message: err.message
                             });
@@ -82,7 +82,7 @@ export class MongoRouter {
                             body[fields[i]] = request.body[fields[i]];
                         }
                         _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true})
-                        .then( function(instance) {
+                        .then( function(instance: any) {
                             if(!instance) {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
@@ -90,7 +90,7 @@ export class MongoRouter {
                             } else {
                                 response.status(200).send(instance);
                             }
-                        }).catch( function(err) {
+                        }).catch( function(err: any) {
                             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                                 return response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
@@ -106,7 +106,7 @@ export class MongoRouter {
                 case "DELETE":
                     this._app.delete(`/${model_name}s/:${model_name}id`, this._auth.delete, function(request: any, response: any) {
                         _model.findByIdAndRemove(request.params[`${model_name}id`])
-                        .then( function(instance) {
+                        .then( function(instance: any) {
                             if (!instance) {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
@@ -116,7 +116,7 @@ export class MongoRouter {
                                     message: `${model_name} deleted successfully`
                                 });
                             }
-                        }).catch( function(err) {
+                        }).catch( function(err: any) {
                             if(err.kind === 'ObjectId' || err.name === 'NotFound') {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
