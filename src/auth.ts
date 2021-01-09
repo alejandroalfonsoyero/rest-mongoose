@@ -21,11 +21,16 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    if (verify(token, "CREATE")) {
-                        next();
-                    } else {
+                    verify(token, "CREATE")
+                    .then(function(verified: boolean) {
+                        if(verified) {
+                            next();
+                        } else {
+                            response.sendStatus(401);
+                        }
+                    }).catch(function(error: any) {
                         response.sendStatus(401);
-                    }
+                    });
                 } else {
                     response.sendStatus(401);
                 }
@@ -38,11 +43,16 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    if (verify(token, "FINDALL")) {
-                        next();
-                    } else {
+                    verify(token, "FINDALL")
+                    .then(function(verified: boolean) {
+                        if(verified) {
+                            next();
+                        } else {
+                            response.sendStatus(401);
+                        }
+                    }).catch(function(error: any) {
                         response.sendStatus(401);
-                    }
+                    });
                 } else {
                     response.sendStatus(401);
                 }
@@ -55,11 +65,16 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    if (verify(token, "FINDONE")) {
-                        next();
-                    } else {
+                    verify(token, "FINDONE")
+                    .then(function(verified: boolean) {
+                        if(verified) {
+                            next();
+                        } else {
+                            response.sendStatus(401);
+                        }
+                    }).catch(function(error: any) {
                         response.sendStatus(401);
-                    }
+                    });
                 } else {
                     response.sendStatus(401);
                 }
@@ -72,11 +87,16 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    if (verify(token, "UPDATE")) {
-                        next();
-                    } else {
+                    verify(token, "UPDATE")
+                    .then(function(verified: boolean) {
+                        if(verified) {
+                            next();
+                        } else {
+                            response.sendStatus(401);
+                        }
+                    }).catch(function(error: any) {
                         response.sendStatus(401);
-                    }
+                    });
                 } else {
                     response.sendStatus(401);
                 }
@@ -89,11 +109,16 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    if (verify(token, "DELETE")) {
-                        next();
-                    } else {
+                    verify(token, "DELETE")
+                    .then(function(verified: boolean) {
+                        if(verified) {
+                            next();
+                        } else {
+                            response.sendStatus(401);
+                        }
+                    }).catch(function(error: any) {
                         response.sendStatus(401);
-                    }
+                    });
                 } else {
                     response.sendStatus(401);
                 }
