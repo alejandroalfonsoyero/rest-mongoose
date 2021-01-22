@@ -22,7 +22,7 @@ export class MongoRouter {
         this._auth = auth;
     }
 
-    public route(callback?: Function): void {
+    public route(_callback?: Function): void {
 
         var mongo_model: MongoModel = this._controller.mongo_model;
         var actions: Array<string> = this._controller.actions;
@@ -42,8 +42,8 @@ export class MongoRouter {
                         const instance = new _model(body);
                         instance.save()
                         .then( function(data: any) {
-                            if(callback) {
-                                callback("CREATE");
+                            if(_callback) {
+                                _callback("CREATE", data);
                             }
                             response.status(201).send(data);
                         }).catch( function(err: any) {
@@ -57,8 +57,8 @@ export class MongoRouter {
                     this._app.get(`/${model_name}s`, this._auth.findall, function(request: any, response: any) {
                         _model.find()
                         .then( function(instances: any) {
-                            if(callback) {
-                                callback("FINDALL");
+                            if(_callback) {
+                                _callback("FINDALL", instances);
                             }
                             response.status(200).send(instances);
                         }).catch( function(err: any) {
@@ -72,8 +72,8 @@ export class MongoRouter {
                     this._app.get(`/${model_name}s/:${model_name}id`, this._auth.findone, function(request: any, response: any) {
                         _model.findById(request.params[`${model_name}id`])
                         .then( function(instance: any) {
-                            if(callback) {
-                                callback("FINDONE");
+                            if(_callback) {
+                                _callback("FINDONE", instance);
                             }
                             response.status(200).send(instance);
                         }).catch( function(err: any) {
@@ -97,8 +97,8 @@ export class MongoRouter {
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
                                 });
                             } else {
-                                if(callback) {
-                                    callback("UPDATE");
+                                if(_callback) {
+                                    _callback("UPDATE", instance);
                                 }
                                 response.status(200).send(instance);
                             }
@@ -124,8 +124,8 @@ export class MongoRouter {
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
                                 });
                             } else {
-                                if(callback) {
-                                    callback("DELETE");
+                                if(_callback) {
+                                    _callback("DELETE", instance);
                                 }
                                 response.status(200).send({
                                     message: `${model_name} deleted successfully`
