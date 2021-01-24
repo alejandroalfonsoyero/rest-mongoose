@@ -11,6 +11,10 @@ interface App {
     delete: Function
 }
 
+interface RouterCallback {
+    (action: string, data: any): void;
+}
+
 export class MongoRouter {
     private _controller: MongoController;
     private _app: App;
@@ -22,7 +26,7 @@ export class MongoRouter {
         this._auth = auth;
     }
 
-    public route(_callback?: Function): void {
+    public route(_callback?: RouterCallback): void {
 
         var mongo_model: MongoModel = this._controller.mongo_model;
         var actions: Array<string> = this._controller.actions;
