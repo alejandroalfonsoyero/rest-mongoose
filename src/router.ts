@@ -92,7 +92,7 @@ export class MongoRouter {
                         var body: any = {};
                         var fields: Array<string> = Object.keys(model_fields);
                         for(let i = 0; i < fields.length; i++) {
-                            body[fields[i]] = request.body[fields[i]];
+                            body[fields[i]] = model_encrypted_fields.includes(fields[i]) ? hashSync(request.body[fields[i]], 10) : request.body[fields[i]];
                         }
                         _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true})
                         .then( function(instance: any) {
