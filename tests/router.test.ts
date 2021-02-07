@@ -34,7 +34,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, valid_actions);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
 
         expect(mock_router).instanceof(MongoRouter);
@@ -50,7 +50,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, valid_actions);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
         mock_router.route(() => {});
 
@@ -70,7 +70,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, ["CREATE"]);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
         mock_router.route(() => {});
 
@@ -90,7 +90,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, ["CREATE", "UPDATE", "FINDALL"]);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
         mock_router.route(() => {});
 
@@ -110,7 +110,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, ["FINDALL", "FINDONE"]);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
         mock_router.route(() => {});
 
@@ -130,7 +130,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, ["FINDALL", "FINDONE"]);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
 
         expect(mock_router.controller).to.be.equal(mock_controller);
@@ -146,7 +146,7 @@ describe('MongoRouter', () => {
         }, true);
 
         let mock_controller = new MongoController(mock_model, ["FINDALL", "FINDONE"]);
-        let mock_auth = new Auth(()=>{return true}, []);
+        let mock_auth = new Auth(mock_model, ()=>{return true}, []);
         let mock_router = new MongoRouter(app_spy, mock_controller, mock_auth);
 
         expect(mock_router.app).to.be.equal(app_spy);

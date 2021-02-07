@@ -9,7 +9,7 @@ npm install rest-mongoose
 
 ## For potential developers
 I'll be happy to get some extra help from developers who want to collaborate
-in this project. If you are one of them please write me to alejandroalfonso1994@gmail.com,
+with this project. If you are one of them please write me to alejandroalfonso1994@gmail.com,
 or just start creating issues in the github repo. You should take a look to the issues
 already opened. Thank you.
 
@@ -17,7 +17,7 @@ already opened. Thank you.
 Here is a simple server example:
 
 ### Require necessary packages
-```
+```javascript
 const rest_mongoose = require('rest-mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -25,7 +25,7 @@ const mongoose = require('mongoose');
 ```
 
 ### Build a basic express app
-```
+```javascript
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 ```
 
 ### Conect to a mongoo database
-```
+```javascript
 mongoose.connect('mongodb://localhost:27017/testdb', {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -50,7 +50,7 @@ mongoose.connect('mongodb://localhost:27017/testdb', {
 ```
 
 ### Create a route for test app
-```
+```javascript
 app.get('/', (request, response) => {
     response.json({"message": "Welcome to test api."});
 });
@@ -78,7 +78,7 @@ var model_1 = new rest_mongoose.MongoModel("name_1", {
 }, true);
 
 var controller_1 = new rest_mongoose.MongoController(model_1, valid_actions);
-var auth_1 = new rest_mongoose.Auth(function(token, action){return true}, []);
+var auth_1 = new rest_mongoose.Auth(model_1, function(token, action, instance_id){return true}, []);
 var router_1 = new rest_mongoose.MongoRouter(app, controller_1, auth_1);
 
 // Define a model 2
@@ -101,7 +101,7 @@ var model_2 = new rest_mongoose.MongoModel("name_2", {
 }, true);
 
 var controller_2 = new rest_mongoose.MongoController(model_2, ["CREATE", "FINDALL"]);
-var auth_2 = new rest_mongoose.Auth(function(token, action){return true}, ["FINDALL"]);
+var auth_2 = new rest_mongoose.Auth(model_2, function(token, action, instance_id){return true}, ["FINDALL"]);
 var router_2 = new rest_mongoose.MongoRouter(app, controller_2, auth_2);
 ```
 
