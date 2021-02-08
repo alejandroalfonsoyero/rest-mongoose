@@ -91,7 +91,7 @@ export class Auth {
                 const token = request.headers['access-token'];
                 const instance_id = request.params[`${this._model.name}id`]
                 if (token) {
-                    verify(token, "FINDONE", instance_id)
+                    verify(token, "UPDATE", instance_id)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();
@@ -114,7 +114,7 @@ export class Auth {
                 const token = request.headers['access-token'];
                 const instance_id = request.params[`${this._model.name}id`]
                 if (token) {
-                    verify(token, "FINDONE", instance_id)
+                    verify(token, "DELETE", instance_id)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();
