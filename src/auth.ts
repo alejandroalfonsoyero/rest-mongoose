@@ -8,7 +8,13 @@ export class Auth {
     private _update: Function;
     private _delete: Function;
 
-    constructor(model: MongoModel, verify: Function, no_token_for: Array<string>) {
+    constructor
+    (
+        model: MongoModel,
+        verify: Function,
+        no_token_for: Array<string>
+    )
+    {
         this._model = model;
         let self = this;
 

@@ -20,7 +20,13 @@ export class MongoRouter {
     private _app: App;
     private _auth: Auth;
 
-    constructor(app: App, controller: MongoController, auth: Auth) {
+    constructor
+    (
+        app: App,
+        controller: MongoController,
+        auth: Auth
+    )
+    {
         this._controller = controller;
         this._app = app;
         this._auth = auth;
@@ -94,7 +100,17 @@ export class MongoRouter {
                         for(let i = 0; i < fields.length; i++) {
                             body[fields[i]] = model_encrypted_fields.includes(fields[i]) ? hashSync(request.body[fields[i]], 10) : request.body[fields[i]];
                         }
-                        _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true})
+                        _model.findById(request.params[`${model_name}id`])
+                        .then( function(instance: any) {
+                            let keys = Object.keys(instance);
+                            let incomming = Object.keys(body);
+                            for(let key of keys) {
+                                if(!incomming.includes(key)) {
+                                    body[key] = instance[key];
+                                }
+                            }
+                            return _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true});
+                        })
                         .then( function(instance: any) {
                             if(!instance) {
                                 response.status(404).send({

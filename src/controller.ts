@@ -15,7 +15,12 @@ export class MongoController {
     private _mongo_model: MongoModel;
     private _actions: Array<string>;
 
-    constructor(model: MongoModel, actions: Array<string>) {
+    constructor
+    (
+        model: MongoModel,
+        actions: Array<string>
+    )
+    {
         this._mongo_model = model;
         if (!MongoController.validate_actions(actions)) throw Error(`Invalid set of actions ${actions}`);
         this._actions = actions;

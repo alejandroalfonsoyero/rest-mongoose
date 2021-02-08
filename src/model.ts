@@ -12,7 +12,14 @@ export class MongoModel {
     private _shema: Schema;
     private _model: Model<any>;
 
-    constructor(name: string, fields: SchemaDefinition, time_stamps: boolean, encrypted_fields?: Array<string>) {
+    constructor
+    (
+        name: string,
+        fields: SchemaDefinition,
+        time_stamps: boolean,
+        encrypted_fields?: Array<string>
+    )
+    {
         this._name = name;
         this._fields = fields;
         this._encrypted_fields = encrypted_fields || [];
