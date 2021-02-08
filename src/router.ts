@@ -96,17 +96,17 @@ export class MongoRouter {
                 case "UPDATE":
                     this._app.put(`/${model_name}s/:${model_name}id`, this._auth.update, function(request: any, response: any) {
                         var body: any = {};
-                        var fields: Array<string> = Object.keys(model_fields);
+                        var fields: Array<string> = Object.keys(request.body);
                         for(let i = 0; i < fields.length; i++) {
                             body[fields[i]] = model_encrypted_fields.includes(fields[i]) ? hashSync(request.body[fields[i]], 10) : request.body[fields[i]];
                         }
                         _model.findById(request.params[`${model_name}id`])
                         .then( function(instance: any) {
-                            let keys = Object.keys(instance);
+                            let keys = Object.keys(instance._doc);
                             let incomming = Object.keys(body);
                             for(let key of keys) {
                                 if(!incomming.includes(key)) {
-                                    body[key] = instance[key];
+                                    body[key] = instance._doc[key];
                                 }
                             }
                             return _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true});
