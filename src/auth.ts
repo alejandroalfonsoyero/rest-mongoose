@@ -112,7 +112,6 @@ export class Auth {
             if (no_token_for.includes("DELETE")) {
                 next();
             } else {
-                console.log(request.params);
                 const token = request.headers['access-token'];
                 const instance_id = request.params[`${self._model.name}id`]
                 if (token) {
