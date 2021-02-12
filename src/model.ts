@@ -9,6 +9,7 @@ export class MongoModel {
     private _name: string;
     private _fields: object;
     private _encrypted_fields: Array<string>;
+    private _indexes: Array<any>;
     private _shema: Schema;
     private _model: Model<any>;
 
@@ -17,12 +18,14 @@ export class MongoModel {
         name: string,
         fields: SchemaDefinition,
         time_stamps: boolean,
-        encrypted_fields?: Array<string>
+        encrypted_fields?: Array<string>,
+        indexes?: Array<any>
     )
     {
         this._name = name;
         this._fields = fields;
         this._encrypted_fields = encrypted_fields || [];
+        this._indexes = indexes || [];
 
         let field_names = Object.keys(fields);
         if(!this._encrypted_fields.every( field => field_names.includes(field))) {
@@ -35,6 +38,9 @@ export class MongoModel {
                 timestamps: time_stamps
             }
         );
+        for(let i = 0; i < this._indexes.length; i++) {
+            this._shema.index(this._indexes[i]);
+        }
         this._shema.plugin(sanitizer, {});
         this._model = model(name, this._shema)
     }
