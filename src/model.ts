@@ -5,11 +5,16 @@ import { Model } from 'mongoose';
 
 const sanitizer = require('mongoose-sanitize');
 
+interface Index {
+    fields: any,
+    options: any
+}
+
 export class MongoModel {
     private _name: string;
     private _fields: object;
     private _encrypted_fields: Array<string>;
-    private _indexes: Array<any>;
+    private _indexes: Array<Index>;
     private _shema: Schema;
     private _model: Model<any>;
 
@@ -19,7 +24,7 @@ export class MongoModel {
         fields: SchemaDefinition,
         time_stamps: boolean,
         encrypted_fields?: Array<string>,
-        indexes?: Array<any>
+        indexes?: Array<Index>
     )
     {
         this._name = name;
@@ -39,7 +44,7 @@ export class MongoModel {
             }
         );
         for(let i = 0; i < this._indexes.length; i++) {
-            this._shema.index(this._indexes[i]);
+            this._shema.index(this._indexes[i].fields, this._indexes[i].options);
         }
         this._shema.plugin(sanitizer, {});
         this._model = model(name, this._shema)
