@@ -24,7 +24,7 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    verify(token, "CREATE", null)
+                    verify(token, request.body, "CREATE", null)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();
@@ -46,7 +46,7 @@ export class Auth {
             } else {
                 const token = request.headers['access-token'];
                 if (token) {
-                    verify(token, "FINDALL", null)
+                    verify(token, request.body, "FINDALL", null)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();
@@ -69,7 +69,7 @@ export class Auth {
                 const token = request.headers['access-token'];
                 const instance_id = request.params[`${self._model.name}id`]
                 if (token) {
-                    verify(token, "FINDONE", instance_id)
+                    verify(token, request.body, "FINDONE", instance_id)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();
@@ -92,7 +92,7 @@ export class Auth {
                 const token = request.headers['access-token'];
                 const instance_id = request.params[`${self._model.name}id`]
                 if (token) {
-                    verify(token, "UPDATE", instance_id)
+                    verify(token, request.body, "UPDATE", instance_id)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();
@@ -115,7 +115,7 @@ export class Auth {
                 const token = request.headers['access-token'];
                 const instance_id = request.params[`${self._model.name}id`]
                 if (token) {
-                    verify(token, "DELETE", instance_id)
+                    verify(token, request.body, "DELETE", instance_id)
                     .then(function(verified: boolean) {
                         if(verified) {
                             next();

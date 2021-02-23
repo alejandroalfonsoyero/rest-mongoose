@@ -78,7 +78,7 @@ var model_1 = new rest_mongoose.MongoModel("name_1", {
 }, true);
 
 var controller_1 = new rest_mongoose.MongoController(model_1, valid_actions);
-var auth_1 = new rest_mongoose.Auth(model_1, async function(token, action, instance_id){return true}, []);
+var auth_1 = new rest_mongoose.Auth(model_1, async function(token, body, action, instance_id){return true}, []);
 var router_1 = new rest_mongoose.MongoRouter(app, controller_1, auth_1);
 
 // Define a model 2
@@ -101,7 +101,7 @@ var model_2 = new rest_mongoose.MongoModel("name_2", {
 }, true);
 
 var controller_2 = new rest_mongoose.MongoController(model_2, ["CREATE", "FINDALL"]);
-var auth_2 = new rest_mongoose.Auth(model_2, async function(token, action, instance_id){return true}, ["FINDALL"]);
+var auth_2 = new rest_mongoose.Auth(model_2, async function(token, body, action, instance_id){return true}, ["FINDALL"]);
 var router_2 = new rest_mongoose.MongoRouter(app, controller_2, auth_2);
 ```
 
