@@ -12,7 +12,7 @@ interface App {
 }
 
 interface RouterCallback {
-    (action: string, data: any): void;
+    (action: string, data: any): any;
 }
 
 export class MongoRouter {
@@ -53,7 +53,8 @@ export class MongoRouter {
                         instance.save()
                         .then( function(data: any) {
                             if(_callback) {
-                                _callback("CREATE", data);
+                                let ret_val = _callback("CREATE", data);
+                                if(ret_val) data = ret_val;
                             }
                             response.status(201).send(data);
                         }).catch( function(err: any) {
@@ -68,7 +69,8 @@ export class MongoRouter {
                         _model.find()
                         .then( function(instances: any) {
                             if(_callback) {
-                                _callback("FINDALL", instances);
+                                let ret_val = _callback("FINDALL", instances);
+                                if(ret_val) instances = ret_val;
                             }
                             response.status(200).send(instances);
                         }).catch( function(err: any) {
@@ -83,7 +85,8 @@ export class MongoRouter {
                         _model.findById(request.params[`${model_name}id`])
                         .then( function(instance: any) {
                             if(_callback) {
-                                _callback("FINDONE", instance);
+                                let ret_val = _callback("FINDONE", instance);
+                                if(ret_val) instance = ret_val;
                             }
                             response.status(200).send(instance);
                         }).catch( function(err: any) {
@@ -118,7 +121,8 @@ export class MongoRouter {
                                 });
                             } else {
                                 if(_callback) {
-                                    _callback("UPDATE", instance);
+                                    let ret_val = _callback("UPDATE", instance);
+                                    if(ret_val) instance = ret_val;
                                 }
                                 response.status(200).send(instance);
                             }
@@ -145,10 +149,12 @@ export class MongoRouter {
                                 });
                             } else {
                                 if(_callback) {
-                                    _callback("DELETE", instance);
+                                    let ret_val = _callback("DELETE", instance);
+                                    if(ret_val) instance = ret_val;
                                 }
                                 response.status(200).send({
-                                    message: `${model_name} deleted successfully`
+                                    message: `${model_name} deleted successfully`,
+                                    deleted: instance
                                 });
                             }
                         }).catch( function(err: any) {
