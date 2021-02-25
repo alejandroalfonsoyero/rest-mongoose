@@ -51,9 +51,9 @@ export class MongoRouter {
                         }
                         const instance = new _model(body);
                         instance.save()
-                        .then( function(data: any) {
+                        .then( async function(data: any) {
                             if(_callback) {
-                                let ret_val = _callback("CREATE", request, data);
+                                let ret_val = await _callback("CREATE", request, data);
                                 if(ret_val) data = ret_val;
                             }
                             response.status(201).send(data);
@@ -67,9 +67,9 @@ export class MongoRouter {
                 case "FINDALL":
                     this._app.get(`/${model_name}s`, this._auth.findall, function(request: any, response: any) {
                         _model.find()
-                        .then( function(instances: any) {
+                        .then( async function(instances: any) {
                             if(_callback) {
-                                let ret_val = _callback("FINDALL", request, instances);
+                                let ret_val = await _callback("FINDALL", request, instances);
                                 if(ret_val) instances = ret_val;
                             }
                             response.status(200).send(instances);
@@ -83,9 +83,9 @@ export class MongoRouter {
                 case "FINDONE":
                     this._app.get(`/${model_name}s/:${model_name}id`, this._auth.findone, function(request: any, response: any) {
                         _model.findById(request.params[`${model_name}id`])
-                        .then( function(instance: any) {
+                        .then( async function(instance: any) {
                             if(_callback) {
-                                let ret_val = _callback("FINDONE", request, instance);
+                                let ret_val = await _callback("FINDONE", request, instance);
                                 if(ret_val) instance = ret_val;
                             }
                             response.status(200).send(instance);
@@ -114,14 +114,14 @@ export class MongoRouter {
                             }
                             return _model.findByIdAndUpdate(request.params[`${model_name}id`], body, { new: true});
                         })
-                        .then( function(instance: any) {
+                        .then( async function(instance: any) {
                             if(!instance) {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
                                 });
                             } else {
                                 if(_callback) {
-                                    let ret_val = _callback("UPDATE", request, instance);
+                                    let ret_val = await _callback("UPDATE", request, instance);
                                     if(ret_val) instance = ret_val;
                                 }
                                 response.status(200).send(instance);
@@ -142,14 +142,14 @@ export class MongoRouter {
                 case "DELETE":
                     this._app.delete(`/${model_name}s/:${model_name}id`, this._auth.delete, function(request: any, response: any) {
                         _model.findByIdAndRemove(request.params[`${model_name}id`])
-                        .then( function(instance: any) {
+                        .then( async function(instance: any) {
                             if (!instance) {
                                 response.status(404).send({
                                     message: `${model_name} not found with id ${request.params[`${model_name}id`]}`
                                 });
                             } else {
                                 if(_callback) {
-                                    let ret_val = _callback("DELETE", request, instance);
+                                    let ret_val = await _callback("DELETE", request, instance);
                                     if(ret_val) instance = ret_val;
                                 }
                                 response.status(200).send({
