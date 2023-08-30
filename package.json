@@ -46,7 +46,7 @@
     "bcryptjs": "^2.4.3",
     "express": "^4.17.1",
     "jsonwebtoken": "^9.0.0",
-    "mongoose": "5.10.1",
+    "mongoose": "5.13.20",
     "mongoose-sanitize": "^1.1.0",
     "seedrandom": "^3.0.5"
   }
